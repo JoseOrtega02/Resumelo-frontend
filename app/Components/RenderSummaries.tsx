@@ -3,22 +3,28 @@ import React, { useState } from 'react'
 import snapshot from "@/public/assets/OIP 2.svg"
 import Image from 'next/image'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+import Link from 'next/link';
 const summariesExample = [
-    {name:"Resumen 1",
+    {
+      id:"1",
+      name:"Resumen 1",
         desc:"lorem impusnLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero",
         cantLikes:6,
         created_at:"1/1/24",
         userId: 1,
         pdf_url: "https://github.com/py-pdf/sample-files/blob/main/001-trivial/minimal-document.pdf",
         snapshot: snapshot
-    },  {name:"Resumen 2",
+    },  { id:"2",
+      name:"Resumen 2",
         desc:"lorem impusnLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero",
         cantLikes:6,
         created_at:"1/1/24",
         userId: 1,
         pdf_url: "https://github.com/py-pdf/sample-files/blob/main/001-trivial/minimal-document.pdf",
         snapshot: snapshot
-    },  {name:"Resumen 3",
+    },  {
+      id:"3",
+      name:"Resumen 3",
         desc:"lorem impusnLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero",
         cantLikes:6,
         created_at:"1/1/24",
@@ -27,7 +33,8 @@ const summariesExample = [
         snapshot: snapshot
     }
 ]
-interface Summary {
+export interface Summary {
+    id:string
     name: string; // Nombre del resumen
     desc: string; // Descripción del resumen
     cantLikes: number; // Cantidad de likes
@@ -70,7 +77,7 @@ export  function RenderSummaries() {
   return (
     <div className='px-4 mt-3 flex flex-col flex-wrap gap-4'>
         {summaries.map((summary,index)=>{
-            return <Summary key={index} summary={summary}/>
+            return <Link href={`resumen/${summary.id}`} key={index}><Summary  summary={summary}/> </Link>
         })}
     </div>
   )
