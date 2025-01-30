@@ -8,6 +8,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        poppins:["var(--font-poppins)"],
+        ovo:["var(--font-ovo)"],
+        hind:["var(--font-hind-madurai)"]
+      },
       colors: {
         background: "#F8F0E3",
         secondary:"#FFD1DC",
