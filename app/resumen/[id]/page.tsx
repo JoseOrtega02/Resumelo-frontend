@@ -1,8 +1,11 @@
 "use client"
 import React from 'react'
 import {PdfViewer} from '@/app/Components/PdfViewer'
+import svg from "@/public/heart-svgrepo-com.svg"
+import downloadIcon from "@/public/archive-down-minimlistic-svgrepo-com(white).svg"
+import Image from 'next/image'
 const summaryExample= {id:"1",
-  name:"Resumen 1",
+  name:"Libro 1",
     desc:"lorem impusnLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero",
     cantLikes:6,
     created_at:"1/1/24",
@@ -15,13 +18,13 @@ export default function Resumen() {
     <div className='flex flex-col gap-4 px-2 justify-center items-center w-full'>
       <div className='bg-secondary rounded-3xl p-3 w-full flex flex-col gap-5'>
         <div className='flex justify-between'> 
-<h1 className='text-lg'>{summaryExample.name}</h1>
-<button>Like</button>
+<h1 className="font-ovo text-3xl text-black">{summaryExample.name}</h1>
+<button> <Image src={svg} alt="icono de corazon"/></button>
         </div>
-       <p className='text-sm'>{summaryExample.desc}</p>
+       <p className='text-sm font-hind text-black'>{summaryExample.desc}</p>
       </div>
       <PdfViewer url={summaryExample.pdf_url} />
-      <button className="bg-accent text-white rounded-full  fixed drop-shadow-xs  bottom-3 left-3 px-6 py-4">!</button>
+      <button className="bg-accent text-white rounded-full  fixed drop-shadow-xs border-2 border-black  bottom-3 left-3 p-2"><Image src={downloadIcon} width={42} alt="icono de descargar archivo" /></button>
     </div>
   )
 }

@@ -2,12 +2,14 @@
 import React, { useState } from 'react'
 import snapshot from "@/public/assets/OIP 2.svg"
 import Image from 'next/image'
+import downloadIcon from "@/public/archive-down-minimlistic-svgrepo-com.svg"
+import heartIcon from "@/public/heart-svgrepo-com.svg"
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Link from 'next/link';
 const summariesExample = [
     {
       id:"1",
-      name:"Resumen 1",
+      name:"Libro 1",
         desc:"lorem impusnLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero",
         cantLikes:6,
         created_at:"1/1/24",
@@ -59,13 +61,13 @@ function Summary({summary}:Props){
         </div>
        
         <div className="p-4 bg-secondary">
-        <h2 className="text-lg font-bold text-black">{summary.name}</h2>
+        <h2 className="text-3xl font-ovo text-black">{summary.name}</h2>
         <div className="mt-4 flex items-center justify-between">
-          <button className="px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-lg">
-            Download
+          <button >
+            <Image src={downloadIcon} alt='Icono de descarga'/>
           </button>
-          <button className="px-4 py-2 text-sm text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg">
-            Like
+          <button >
+            <Image src={heartIcon} alt='Icono de Corazon'/>
           </button>
         </div>
       </div>
