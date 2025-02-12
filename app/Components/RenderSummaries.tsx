@@ -33,6 +33,55 @@ const summariesExample = [
         userId: 1,
         pdf_url: "https://github.com/py-pdf/sample-files/blob/main/001-trivial/minimal-document.pdf",
         snapshot: snapshot
+    },
+    {
+      id:"1",
+      name:"Libro 1",
+      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cantLikes:6,
+      created_at:"1/1/24",
+      userId: 1,
+      pdf_url: "https://github.com/py-pdf/sample-files/blob/main/001-trivial/minimal-document.pdf",
+      snapshot: snapshot
+    },  
+    { id:"2",
+      name:"Resumen 2",
+      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cantLikes:6,
+      created_at:"1/1/24",
+      userId: 1,
+      pdf_url: "https://github.com/py-pdf/sample-files/blob/main/001-trivial/minimal-document.pdf",
+      snapshot: snapshot
+    },  
+    {
+      id:"3",
+      name:"Resumen 3",
+      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cantLikes:6,
+      created_at:"1/1/24",
+      userId: 1,
+      pdf_url: "https://github.com/py-pdf/sample-files/blob/main/001-trivial/minimal-document.pdf",
+      snapshot: snapshot
+    },
+    {
+      id:"4",
+      name:"Resumen 4",
+      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cantLikes:10,
+      created_at:"2/1/24",
+      userId: 2,
+      pdf_url: "https://example.com/pdf4.pdf",
+      snapshot: snapshot
+    },
+    {
+      id:"5",
+      name:"Resumen 5",
+      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cantLikes:3,
+      created_at:"3/1/24",
+      userId: 3,
+      pdf_url: "https://example.com/pdf5.pdf",
+      snapshot: snapshot
     }
 ]
 export interface Summary {
@@ -49,7 +98,7 @@ interface Props{
     summary:Summary
 }
 function Summary({summary}:Props){
-    return <div className='flex flex-col rounded-lg overflow-hidden'>
+    return <div className='flex flex-col rounded-lg overflow-hidden min-w-80'>
         <div className="relative w-full h-48">
            <Image 
        src={summary.snapshot}
@@ -77,7 +126,7 @@ function Summary({summary}:Props){
 export  function RenderSummaries() {
     const [summaries,setSummaries] = useState(summariesExample)
   return (
-    <div className='px-4 mt-3 flex flex-col flex-wrap gap-4'>
+    <div className='px-4 mt-3 flex flex-wrap gap-4 mx-auto justify-center'>
         {summaries.map((summary,index)=>{
             return <Link href={`resumen/${summary.id}`} key={index}><Summary  summary={summary}/> </Link>
         })}
