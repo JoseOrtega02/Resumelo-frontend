@@ -28,23 +28,23 @@ function Page() {
   const [fileName, setFileName] = useState<string | null>(null);
 
   return (
-    <div>
+    <div className="max-w-5xl mx-auto">
       <h2 className="text-black font-poppins font-semibold text-2xl mx-4 my-9">
         Comparte tu resumen :)
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 justify-center px-3 my-2 max-w-96 mx-auto">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 justify-center px-3 my-2 max-w-96 md:max-w-lg mx-auto">
         {/* Nombre */}
         <label className="text-black font-hind">Nombre:</label>
         <input
           {...register("name", { required: true })}
-          className="bg-secondary border-black text-black border-2 rounded-3xl px-3"
+          className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
         {errors.name && <span className="text-red-500 text-sm">Este campo es obligatorio</span>}
 
         {/* Descripción */}
         <label className="text-black font-hind">Descripción:</label>
-        <textarea {...register("desc")}  className="bg-secondary border-black text-black border-2 rounded-3xl h-24 px-3 py-1 text-base" />
+        <textarea {...register("desc")}  className="bg-secondary border-black text-black border-2 rounded-3xl h-24 px-3 py-2 text-base" />
 
         {/* Subir Archivo */}
         <label className="text-black font-hind">Subir archivo PDF</label>
@@ -81,7 +81,7 @@ function Page() {
         {errors.pdfFile && <p className="text-red-500 text-sm mt-1">{errors.pdfFile.message}</p>}
 
         {/* Botón de envío */}
-        <button type="submit" className="flex justify-center items-center gap-2 bg-accent  text-white font-hind px-4 py-2 rounded-md mt-4">
+        <button type="submit" className="flex justify-center items-center gap-2 bg-accent  text-white font-hind px-4 py-2 rounded-full mt-4">
           Publicar <AddFile/>
         </button>
       </form>

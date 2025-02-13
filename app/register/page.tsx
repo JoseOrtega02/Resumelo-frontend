@@ -22,18 +22,18 @@ export default function Page() {
   };
 
   return (
-    <div>
-      <h2 className="text-black font-poppins font-semibold text-2xl mx-4 my-9">
+    <div className="max-w-screen-md mx-auto px-4">
+      <h2 className="text-black font-poppins font-semibold text-2xl mx-4 my-8">
         Crea una cuenta
       </h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 justify-center px-3 my-2 max-w-96 mx-auto"
+        className="flex flex-col gap-4  p-6 rounded-lg max-w-lg mx-auto"
       >
         <label className="text-black font-hind">Nombre:</label>
         <input
           {...register("name", { required: true })}
-          className="bg-secondary border-black text-black border-2 rounded-3xl px-3"
+          className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
         {errors.name && (
           <span className="text-red-500 text-sm">Este campo es obligatorio</span>
@@ -42,7 +42,7 @@ export default function Page() {
         <label className="text-black font-hind">Email:</label>
         <input
           {...register("email", { required: true })}
-          className="bg-secondary border-black text-black border-2 rounded-3xl px-3"
+          className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
         {errors.email && (
           <span className="text-red-500 text-sm">Este campo es obligatorio</span>
@@ -52,7 +52,7 @@ export default function Page() {
         <input
           type="password"
           {...register("password", { required: true, minLength: 6 })}
-          className="bg-secondary border-black text-black border-2 rounded-3xl px-3"
+          className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
         {errors.password && (
           <span className="text-red-500 text-sm">
@@ -67,7 +67,7 @@ export default function Page() {
             required: true,
             validate: (value) => value === watch("password") || "Las contraseñas no coinciden",
           })}
-          className="bg-secondary border-black text-black border-2 rounded-3xl px-3"
+          className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
         {errors.confirmPassword && (
           <span className="text-red-500 text-sm">
@@ -77,7 +77,7 @@ export default function Page() {
 
         <button
           type="submit"
-          className="flex justify-center items-center gap-2 bg-accent text-white font-hind px-4 py-2 rounded-md mt-4"
+          className="flex justify-center items-center gap-2 bg-accent text-white font-hind px-4 py-2 rounded-full mt-4"
         >
           Registrarse
         </button>

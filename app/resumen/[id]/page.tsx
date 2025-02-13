@@ -15,7 +15,7 @@ const summaryExample= {id:"1",
 
 export default function Resumen() {
   return (
-    <div className='flex flex-col gap-4 px-2 justify-center items-center w-full'>
+    <div className='flex flex-col gap-4 px-2 justify-center items-center w-full md:max-w-5xl mx-auto'>
       <div className='bg-secondary rounded-3xl p-3 w-full flex flex-col gap-5'>
         <div className='flex justify-between'> 
 <h1 className="font-ovo text-3xl text-black">{summaryExample.name}</h1>

@@ -10,7 +10,7 @@ interface props{
 export const PdfViewer = ({ url }:props) => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen md:max-w-5xl">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
         <div style={{ height: '750px' }}>
             <Viewer
