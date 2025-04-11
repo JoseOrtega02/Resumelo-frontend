@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -13,9 +14,33 @@ export default function Page() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-
+  const router = useRouter();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+    const body = {
+      email: data.email,
+      password: data.password,
+    };
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/login";
+
+    fetch(url || "", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // <-- Este header es necesario
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        alert("Sesion iniciada correctamente");
+        router.push("/");
+      })
+      .catch((err) => {
+        alert("something went grong: " + err);
+        console.log(err);
+      });
   };
 
   return (
@@ -33,7 +58,9 @@ export default function Page() {
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
         />
         {errors.email && (
-          <span className="text-red-500 text-sm">Este campo es obligatorio</span>
+          <span className="text-red-500 text-sm">
+            Este campo es obligatorio
+          </span>
         )}
 
         <label className="text-black font-hind">Contraseña:</label>
@@ -43,7 +70,9 @@ export default function Page() {
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
         />
         {errors.password && (
-          <span className="text-red-500 text-sm">Este campo es obligatorio</span>
+          <span className="text-red-500 text-sm">
+            Este campo es obligatorio
+          </span>
         )}
 
         <button
@@ -56,4 +85,3 @@ export default function Page() {
     </div>
   );
 }
-

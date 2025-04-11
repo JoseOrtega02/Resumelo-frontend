@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  crossOrigin: "use-credentials",
   /* config options here */
   images: {
     domains: ["img.freepik.com", "veterinaire-tour-hassan.com"],

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 interface Inputs {
   name: string;
@@ -17,8 +18,32 @@ export default function Page() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const router = useRouter();
+  const onSubmit = (data: Inputs) => {
+    const body = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/user";
+    fetch(url || "", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // <-- Este header es necesario
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        alert("Usuario creado correctamente");
+        router.push("/login");
+      })
+      .catch((err) => {
+        alert("something went grong: " + err);
+        console.log(err);
+      });
   };
 
   return (
@@ -36,7 +61,9 @@ export default function Page() {
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
         {errors.name && (
-          <span className="text-red-500 text-sm">Este campo es obligatorio</span>
+          <span className="text-red-500 text-sm">
+            Este campo es obligatorio
+          </span>
         )}
 
         <label className="text-black font-hind">Email:</label>
@@ -45,7 +72,9 @@ export default function Page() {
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
         {errors.email && (
-          <span className="text-red-500 text-sm">Este campo es obligatorio</span>
+          <span className="text-red-500 text-sm">
+            Este campo es obligatorio
+          </span>
         )}
 
         <label className="text-black font-hind">Contraseña:</label>
@@ -65,7 +94,8 @@ export default function Page() {
           type="password"
           {...register("confirmPassword", {
             required: true,
-            validate: (value) => value === watch("password") || "Las contraseñas no coinciden",
+            validate: (value) =>
+              value === watch("password") || "Las contraseñas no coinciden",
           })}
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
