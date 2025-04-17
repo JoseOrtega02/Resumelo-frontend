@@ -3,12 +3,13 @@ import React from "react";
 import { RenderSummaries } from "../Components/RenderSummaries";
 import EditIcon from "../Components/icons/EditIcon";
 import LogOut from "../Components/icons/LogOut";
-import { useUser } from "../Utils/useUser";
 import { useRouter } from "next/navigation";
+import { useStore } from "../GlobalState/zustandStore";
 export default function Page() {
   const router = useRouter();
-  const { user, error, loading } = useUser();
-
+  // const { error, loading } = useUser();
+  const user = useStore((state) => state.user);
+  const clearState = useStore((state) => state.removeUser);
   const logOut = async () => {
     await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/login/logout", {
       method: "POST",
@@ -17,13 +18,14 @@ export default function Page() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        clearState();
         alert("Log out successfully");
         router.push("/");
       })
       .catch((error) => alert(error));
   };
-  if (loading) return <>Loading...</>;
-  if (error) return <>Something went wrong</>;
+  // if (loading) return <>Loading...</>;
+  // if (error) return <>Something went wrong</>;
   return (
     <div className="max-w-5xl mx-auto">
       <div className="bg-secondary rounded-lg w-11/12 mx-auto px-4 py-1 flex flex-col gap-3 max-w-4xl md:p-4 my-3">

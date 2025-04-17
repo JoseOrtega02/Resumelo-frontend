@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useStore } from "../GlobalState/zustandStore";
 
 interface Inputs {
   email: string;
@@ -15,7 +16,8 @@ export default function Page() {
     formState: { errors },
   } = useForm<Inputs>();
   const router = useRouter();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const checkUser = useStore((state) => state.checkUser);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
     const body = {
       email: data.email,
@@ -23,7 +25,7 @@ export default function Page() {
     };
     const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/login";
 
-    fetch(url || "", {
+    await fetch(url || "", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -35,6 +37,7 @@ export default function Page() {
       .then((data) => {
         console.log(data);
         alert("Sesion iniciada correctamente");
+        checkUser();
         router.push("/");
       })
       .catch((err) => {

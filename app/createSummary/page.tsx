@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { UploadFile } from "../Components/icons/UploadFile"; // Importa un icono de subida
 import { AddFile } from "../Components/icons/AddFile";
+import { useRouter } from "next/navigation";
 import { useUser } from "../Utils/useUser";
 
 interface Inputs {
@@ -14,6 +15,7 @@ interface Inputs {
 
 function Page() {
   const { user } = useUser();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -23,7 +25,8 @@ function Page() {
   } = useForm<Inputs>();
   const [fileName, setFileName] = useState<string | null>(null);
   if (!user) {
-    return <></>;
+    router.push("/login");
+    return null;
   }
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const formData = new FormData();

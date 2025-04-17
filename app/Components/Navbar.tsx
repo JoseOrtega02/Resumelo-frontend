@@ -9,10 +9,11 @@ import RegisterSvg from "@/public/user-plus-rounded-svgrepo-com (1) 1.svg";
 import { useUser } from "../Utils/useUser";
 export function Navbar() {
   const [open, setOpen] = useState<boolean>(false);
-  const { error, loading, user } = useUser();
-  if (error) {
-    alert("something went wrong with the user");
-  }
+  const { user } = useUser();
+  // if (error) {
+  //   alert("something went wrong with the user");
+  // }
+  console.log(user);
   return (
     <header className="max-w-[1024px] mx-auto px-4">
       <nav className="flex items-center justify-between py-4">
@@ -29,7 +30,7 @@ export function Navbar() {
           >
             Create Summary
           </Link>
-          {loading && <h3>loading...</h3>}
+          {/* {loading && <h3>loading...</h3>} */}
           {user != null ? (
             <div>
               <Link href="/my-account" className="">

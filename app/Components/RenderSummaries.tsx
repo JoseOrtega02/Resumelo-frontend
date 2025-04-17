@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import downloadIcon from "@/public/archive-down-minimlistic-svgrepo-com.svg";
 import heartIcon from "@/public/heart-svgrepo-com.svg";
@@ -19,7 +18,6 @@ interface Props {
   summary: Summary;
 }
 function Summary({ summary }: Props) {
-  console.log(summary);
   return (
     <div className="flex flex-col rounded-lg overflow-hidden min-w-80">
       <div className="relative w-full h-48">
@@ -46,29 +44,19 @@ function Summary({ summary }: Props) {
   );
 }
 
-export function RenderSummaries() {
-  const [summaries, setSummaries] = useState<Summary[]>([]);
-  useEffect(() => {
-    fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/summary")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setSummaries(data.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }, []);
+export async function RenderSummaries() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/summary`, {
+    next: { revalidate: 60 }, // ⚠️ o cache: 'force-cache' si no querés revalidación
+  });
+  const data = await res.json();
   return (
     <div className="px-4 mt-3 flex flex-wrap gap-4 mx-auto justify-center">
-      {summaries.length == 0 && <div>Not summaries found</div>}
-      {summaries.map((summary, index) => {
-        return (
-          <Link href={`resumen/${summary.id}`} key={index}>
-            <Summary summary={summary} />{" "}
-          </Link>
-        );
-      })}
+      {data.data?.length === 0 && <div>Not summaries found</div>}
+      {data.data?.map((summary: Summary, index: number) => (
+        <Link href={`resumen/${summary.id}`} key={index}>
+          <Summary summary={summary} />
+        </Link>
+      ))}
     </div>
   );
 }
