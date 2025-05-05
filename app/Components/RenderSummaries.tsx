@@ -22,9 +22,8 @@ interface Props {
   summary: Summary;
 }
 function Summary({ summary }: Props) {
-  console.log(summary);
   return (
-    <div className="rounded-xl min-w-80 border-black border-solid border-4">
+    <div className="rounded-xl min-w-80 border-black border-solid border-4 shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <Link href={`resumen/${summary.id}`}>
         <div className="p-4 pb-8">
           <h2 className="text-5xl font-ovo text-black">{summary.title}</h2>
@@ -34,7 +33,7 @@ function Summary({ summary }: Props) {
         </div>
       </Link>
       <div className="p-4 border-t-2 border-black border-solid w-full flex items-center justify-between">
-        <button className="flex bg-accent rounded-[28px] border-solid border-black border-2 px-4 py-2 justify-center items-center text-white">
+        <button className="flex bg-accent rounded-[28px] border-solid border-black border-2 px-4 py-2 justify-center items-center text-white transition-transform duration-300 hover:bg-white hover:text-black hover:scale-105">
           <Image src={downloadIcon} alt="Icono de descarga" />
           Descargar
         </button>
