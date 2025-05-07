@@ -23,7 +23,6 @@ export default async function Resumen({ params }: PageProps) {
 
   const data = await res.json();
   const summary = data.data;
-  console.log(summary);
   return (
     <div className="flex flex-col gap-4 px-2 justify-center items-center w-full md:max-w-5xl mx-auto">
       {summary ? (
