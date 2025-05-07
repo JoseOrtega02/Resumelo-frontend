@@ -1,8 +1,7 @@
 import React from "react";
 import { PdfViewer } from "@/app/Components/PdfViewer";
-import svg from "@/public/heart-svgrepo-com.svg";
-import Image from "next/image";
 import { DownloadButton } from "./DownloadButton";
+import LikeButton from "@/app/Components/LikeButton";
 
 interface PageProps {
   params: { id: string };
@@ -33,10 +32,7 @@ export default async function Resumen({ params }: PageProps) {
             <div className="flex justify-between">
               <h1 className="font-ovo text-3xl text-black">{summary.title}</h1>
               <div className="flex gap-4">
-                <button>
-                  {" "}
-                  <Image src={svg} alt="icono de corazon" width={60} />
-                </button>
+                <LikeButton likes={summary.likes} summaryId={summary.id} />
                 <DownloadButton
                   variant="desktop"
                   pdf={summary.pdf}
