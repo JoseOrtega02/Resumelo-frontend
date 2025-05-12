@@ -48,7 +48,7 @@ export default function Page() {
       <h2 className="text-xl text-black font-ovo pl-3 my-3 max-w-5xl md:my-3">
         Resumenes Subidos:
       </h2>
-      <RenderSummaries />
+      <RenderSummaries searchParams={{ q: undefined }} />
     </div>
   );
 }

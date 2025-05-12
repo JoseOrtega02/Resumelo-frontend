@@ -3,6 +3,8 @@ import Image from "next/image";
 import downloadIcon from "@/public/archive-down-minimlistic-svgrepo-com.svg";
 import heartIcon from "@/public/heart-svgrepo-com.svg";
 import Link from "next/link";
+import LikeButton from "./LikeButton";
+import { ShowLikes } from "./ShowLikes";
 export interface Summary {
   id: string;
   title: string; // Nombre del resumen
@@ -23,30 +25,31 @@ interface Props {
 }
 function Summary({ summary }: Props) {
   return (
-    <div className="rounded-xl min-w-80 border-black border-solid border-4 shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+    <div className="rounded-xl min-w-80 border-black border-solid border-4 shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl p-2">
       <Link href={`resumen/${summary.id}`}>
-        <div className="p-4 pb-8">
-          <h2 className="text-5xl font-ovo text-black">{summary.title}</h2>
-          <h4 className="text-xl font-ovo text-black">
-            by: <span className="text-accent">{summary.authorData.name}</span>
-          </h4>
+        <div className="flex justify-between">
+          <h2 className="text-6xl font-ovo text-black">{summary.title}</h2>
+          <ShowLikes likes={summary.likes} />
         </div>
+        <p className="text-xl font-hind text-black my-2">{summary.desc}</p>
+        <h4 className="text-xl font-ovo text-black mt-8 mb-2">
+          Author: <span className="text-accent">{summary.authorData.name}</span>
+        </h4>
       </Link>
-      <div className="p-4 border-t-2 border-black border-solid w-full flex items-center justify-between">
-        <button className="flex bg-accent rounded-[28px] border-solid border-black border-2 px-4 py-2 justify-center items-center text-white transition-transform duration-300 hover:bg-white hover:text-black hover:scale-105">
-          <Image src={downloadIcon} alt="Icono de descarga" />
-          Descargar
-        </button>
-        <button>
-          <Image src={heartIcon} width={60} alt="Icono de Corazon" />
-        </button>
-      </div>
     </div>
   );
 }
 
-export async function RenderSummaries() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/summary`, {
+export async function RenderSummaries({
+  searchParams,
+}: {
+  searchParams: { q?: string };
+}) {
+  const query = (await searchParams.q) ?? "";
+  const url = query
+    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/summary/search/${query}`
+    : `${process.env.NEXT_PUBLIC_BACKEND_URL}/summary`;
+  const res = await fetch(url, {
     next: { revalidate: 60 }, // ⚠️ o cache: 'force-cache' si no querés revalidación
   });
   const data = await res.json();
