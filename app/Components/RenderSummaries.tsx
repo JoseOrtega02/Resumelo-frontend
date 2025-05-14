@@ -1,9 +1,5 @@
 import React from "react";
-import Image from "next/image";
-import downloadIcon from "@/public/archive-down-minimlistic-svgrepo-com.svg";
-import heartIcon from "@/public/heart-svgrepo-com.svg";
 import Link from "next/link";
-import LikeButton from "./LikeButton";
 import { ShowLikes } from "./ShowLikes";
 export interface Summary {
   id: string;
@@ -53,6 +49,7 @@ export async function RenderSummaries({
     next: { revalidate: 60 }, // ⚠️ o cache: 'force-cache' si no querés revalidación
   });
   const data = await res.json();
+  console.log(data);
   return (
     <div className="px-4 mt-3 flex flex-wrap gap-4 mx-auto justify-center">
       {data.data?.length === 0 && <div>Not summaries found</div>}

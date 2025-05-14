@@ -10,26 +10,42 @@ interface Props {
 function LikeButton({ likes, summaryId }: Props) {
   const userId = useStore((state) => state.user?.id);
   const [status, setStatus] = useState<boolean>(false);
-  const handleLike = async (summaryId: string, userId: string) => {
+  const handleLike = async (
+    summaryId: string,
+    userId: string,
+    status: boolean
+  ) => {
     const body = {
       summaryId: summaryId,
       userId: userId,
     };
-    const response = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_URL + "/like",
-      {
-        method: "POST",
+    let url = process.env.NEXT_PUBLIC_BACKEND_URL + "/like";
+    let params: RequestInit = {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // <-- Este header es necesario
+      },
+      body: JSON.stringify(body),
+    };
+    if (status) {
+      url =
+        process.env.NEXT_PUBLIC_BACKEND_URL + `/like/${summaryId}&${userId}`;
+      params = {
+        method: "DELETE",
         credentials: "include",
         headers: {
           "Content-Type": "application/json", // <-- Este header es necesario
         },
-        body: JSON.stringify(body),
-      }
-    );
+      };
+    }
+
+    const response = await fetch(url, params);
 
     if (!response.ok) {
       alert("something went wrong");
       console.log(response);
+      console.log(status);
     }
     console.log(response);
   };
@@ -39,7 +55,7 @@ function LikeButton({ likes, summaryId }: Props) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setStatus(Boolean(data.status));
+        setStatus(Boolean(data.data.status));
       })
       .catch((err) => console.error(err));
   });
@@ -47,7 +63,7 @@ function LikeButton({ likes, summaryId }: Props) {
     <>
       {userId ? (
         <button
-          onClick={() => handleLike(summaryId, userId)}
+          onClick={() => handleLike(summaryId, userId, status)}
           className="relative w-[60px] h-[60px]"
         >
           <h5

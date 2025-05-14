@@ -6,6 +6,8 @@ import closeSvg from "@/public/cross-circle-svgrepo-com 1.svg";
 import Link from "next/link";
 import LogInSvg from "@/public/user-svgrepo-com (1) 1.svg";
 import RegisterSvg from "@/public/user-plus-rounded-svgrepo-com (1) 1.svg";
+import HouseSvg from "@/public/home-white.svg.svg";
+import ClipboardSvg from "@/public/clipboard-black.svg.svg";
 import { useUser } from "../Utils/useUser";
 export function Navbar() {
   const [open, setOpen] = useState<boolean>(false);
@@ -13,7 +15,6 @@ export function Navbar() {
   // if (error) {
   //   alert("something went wrong with the user");
   // }
-  console.log(user);
   return (
     <header className="max-w-[1024px] mx-auto px-4">
       <nav className="flex items-center justify-between py-4">
@@ -21,20 +22,27 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="underline  text-lg hover:text-gray-600 ">
-            Home
+          <Link href="/">
+            <button className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
+              <Image src={HouseSvg} width={28} alt="icono de casa" />
+              Home
+            </button>
           </Link>
-          <Link
-            href="/createSummary"
-            className="underline  text-lg hover:text-gray-600"
-          >
-            Create Summary
+          <Link href="/createSummary">
+            <button className=" rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
+              <Image
+                src={ClipboardSvg}
+                width={28}
+                alt="icono de portapapeles"
+              />
+              Create Summary
+            </button>
           </Link>
           {/* {loading && <h3>loading...</h3>} */}
           {user != null ? (
             <div>
               <Link href="/my-account" className="">
-                <button className="bg-accent text-white font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2">
+                <button className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
                   <Image src={LogInSvg} width={28} alt="Usuario Icono" />
                   {user?.name}
                 </button>
@@ -44,13 +52,13 @@ export function Navbar() {
             <div className="flex gap-3">
               <Link href="/login">
                 {" "}
-                <button className="bg-background text-black font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2">
+                <button className="bg-background text-black font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2 transition-transform transform hover:scale-110">
                   Log in{" "}
                   <Image src={LogInSvg} width={32} alt="Iniciar Sesion Icono" />
                 </button>
               </Link>{" "}
               <Link href="/register">
-                <button className="bg-accent text-white font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2">
+                <button className="bg-accent text-white font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2 transition-transform transform hover:scale-110">
                   Register{" "}
                   <Image
                     src={RegisterSvg}
