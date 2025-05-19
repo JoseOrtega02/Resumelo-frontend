@@ -3,6 +3,8 @@ import { RenderSummaries } from "./Components/RenderSummaries";
 import { SearchBar } from "./Components/SearchBar";
 import svg from "@/public/add-circle-svgrepo-com.svg";
 import Link from "next/link";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default async function Home({
   searchParams,
@@ -20,7 +22,9 @@ export default async function Home({
           </button>
         </Link>
       </div>
+      <Suspense fallback={<Loading/>}>
       <RenderSummaries searchParams={query} />
+      </Suspense>
       <Link href="createSummary" className="flex md:hidden">
         <button className="fixed bottom-3 right-1">
           <Image src={svg} width={68} alt="Icono de Creacion" />
