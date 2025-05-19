@@ -5,7 +5,8 @@ import svg from "@/public/add-circle-svgrepo-com.svg";
 import Link from "next/link";
 import { Suspense } from "react";
 import Loading from "./loading";
-
+import Error from "./error";
+import { ErrorBoundary } from "react-error-boundary";
 export default async function Home({
   searchParams,
 }: {
@@ -23,7 +24,10 @@ export default async function Home({
         </Link>
       </div>
       <Suspense fallback={<Loading/>}>
+        <ErrorBoundary FallbackComponent={Error}>
+
       <RenderSummaries searchParams={query} />
+        </ErrorBoundary>
       </Suspense>
       <Link href="createSummary" className="flex md:hidden">
         <button className="fixed bottom-3 right-1">
