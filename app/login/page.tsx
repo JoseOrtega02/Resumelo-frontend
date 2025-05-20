@@ -25,7 +25,7 @@ export default function Page() {
     };
     const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/login";
 
-    await fetch(url || "", {
+   let res = await fetch(url || "", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -33,17 +33,18 @@ export default function Page() {
       },
       body: JSON.stringify(body),
     })
-      .then((res) => res.json())
-      .then((data) => {
+   res =await res.json() 
+      if(!res.ok){
+        alert("something went grong: " + res);
+        console.log(res);
+    }else{
+
         console.log(data);
         alert("Sesion iniciada correctamente");
         checkUser();
         router.push("/");
-      })
-      .catch((err) => {
-        alert("something went grong: " + err);
-        console.log(err);
-      });
+    }
+
   };
 
   return (

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { PdfViewer } from "@/app/Components/PdfViewer";
 import { DownloadButton } from "./DownloadButton";
 import LikeButton from "@/app/Components/LikeButton";
+import Loading from "@/app/loading";
 
 interface PageProps {
   params: { id: string };
@@ -31,7 +32,9 @@ export default async function Resumen({ params }: PageProps) {
             <div className="flex justify-between">
               <h1 className="font-ovo text-3xl text-black">{summary.title}</h1>
               <div className="flex gap-4">
-                <LikeButton likes={summary.likes} summaryId={summary.id} />
+          <Suspense fallback={<Loading/>}>
+                <LikeButton summaryId={summary.id} />
+          </Suspense>
                 <DownloadButton
                   variant="desktop"
                   pdf={summary.pdf}

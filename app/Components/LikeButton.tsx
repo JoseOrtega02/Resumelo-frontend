@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useStore } from "../GlobalState/zustandStore";
 import { HeartIcon } from "./HeartIcon";
 interface Props {
-  likes: number;
   summaryId: string;
 }
-function LikeButton({ likes, summaryId }: Props) {
+function LikeButton({ summaryId }: Props) {
+  const [likes,setLikes] = useState<number>(0)
   const userId = useStore((state) => state.user?.id);
   const [status, setStatus] = useState<boolean>(false);
   const handleLike = async (
@@ -47,7 +47,9 @@ function LikeButton({ likes, summaryId }: Props) {
       console.log(response);
       console.log(status);
     }
-    console.log(response);
+    const data = await response.json()
+    setStatus(data.data.likeStatus)
+    console.log(data);
   };
 
   useEffect(() => {
@@ -55,7 +57,8 @@ function LikeButton({ likes, summaryId }: Props) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setStatus(Boolean(data.data.status));
+        setLikes(data.data.likes)
+        setStatus(Boolean(data.data.likedByUser));
       })
       .catch((err) => console.error(err));
   });
