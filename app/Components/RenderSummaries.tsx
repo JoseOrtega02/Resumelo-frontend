@@ -21,10 +21,10 @@ interface Props {
 }
 function Summary({ summary }: Props) {
   return (
-    <div className="rounded-xl min-w-80 border-black border-solid border-4 shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl p-2">
+    <div className="rounded-xl md:min-w-80 min-w-60 border-black border-solid border-4 shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl p-2">
       <Link href={`resumen/${summary.id}`}>
         <div className="flex justify-between">
-          <h2 className="text-6xl font-ovo text-black">{summary.title}</h2>
+          <h2 className="md:text-6xl text-5xl font-ovo text-black">{summary.title}</h2>
           <ShowLikes likes={summary.likes} />
         </div>
         <p className="text-xl font-hind text-black my-2">{summary.desc}</p>

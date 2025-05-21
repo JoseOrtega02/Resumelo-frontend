@@ -93,34 +93,58 @@ export function Navbar() {
 
         {/* Menu Links */}
         <div className="flex flex-col items-center justify-start py-8 gap-8">
-          <Link
-            href="/"
-            className="text-2xl hover:text-gray-200"
-            onClick={() => setOpen(false)}
-          >
-            Home
+          <Link href="/">
+            <button onClick={() => setOpen(false)} className="bg-accent rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background">
+              <Image src={HouseSvg} width={28} alt="icono de casa" />
+              Home
+            </button>
           </Link>
-          <Link
-            href="/createSummary"
-            className="text-2xl hover:text-gray-200"
-            onClick={() => setOpen(false)}
-          >
-            Create Summary
+
+          <Link href="/createSummary">
+            <button onClick={() => setOpen(false)} className=" rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background ">
+              <Image
+                src={ClipboardSvg}
+                width={28}
+                alt="icono de portapapeles"
+              />
+              Create Summary
+            </button>
           </Link>
-          <Link
-            href="/user"
-            className="text-2xl hover:text-gray-200"
-            onClick={() => setOpen(false)}
-          >
-            My Account
-          </Link>
-        </div>
-        <button className="flex justify-center items-center gap-2 bg-background text-black font-hind px-4 py-2 rounded-full w-3/4 mt-4 mx-auto border-2 border-black">
-          Log in
-        </button>
-        <button className="flex justify-center items-center gap-2 bg-alternative1 text-black font-hind px-4 py-2 rounded-full w-3/4 mt-4 mx-auto border-2 border-black">
-          Register
-        </button>
+
+{user != null ? (
+            <div>
+              <Link href="/my-account" className="">
+                <button onClick={() => setOpen(false)} className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
+                  <Image src={LogInSvg} width={28} alt="Usuario Icono" />
+                  {user?.name}
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div className="gap-3 w-full px-4">
+
+              <Link href="/login">
+                {" "}
+                <button onClick={() => setOpen(false)} className="flex justify-center items-center gap-2 bg-background text-black font-hind px-4 py-2 rounded-full w-full mt-4 mx-auto border-2 border-black transition-transform transform hover:scale-110">
+                  Log in{" "}
+                  <Image src={LogInSvg} width={32} alt="Iniciar Sesion Icono" />
+                </button>
+              </Link>{" "}
+
+              <Link href="/register">
+                <button onClick={() => setOpen(false)} className="flex justify-center items-center gap-2 bg-alternative1 text-black font-hind px-4 py-2 rounded-full w-full mt-4 mx-auto border-2 border-black transition-transform transform hover:scale-110">
+                  Register{" "}
+                  <Image
+                    src={RegisterSvg}
+                    width={32}
+                    alt="Crear Cuenta Icono"
+                  />
+                </button>
+              </Link>
+            </div>
+          )}
+          </div>
+
       </nav>
     </header>
   );
