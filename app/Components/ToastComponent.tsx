@@ -6,4 +6,17 @@ function ErrorToastComponent({message}:{message:string}) {
   )
 }
 
-export  {ErrorToastComponent}
+function SuccessToastComponent({message}:{message:string}) {
+  return (
+    <div className="bg-background p-4 border-accent rounded-xl border-2 border-solid text-accent">
+        <h3><span>&#x2713; </span>{message}</h3>
+    </div>
+  )
+}
+
+
+
+
+
+
+export  {ErrorToastComponent,SuccessToastComponent}

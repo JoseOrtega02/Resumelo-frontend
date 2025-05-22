@@ -2,13 +2,48 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import {
+  ErrorToastComponent,
+  SuccessToastComponent,
+} from "../Components/ToastComponent";
 
-interface Inputs {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+
+
+const schema = yup.object({
+  name: yup
+    .string()
+    .max(20, "El nombre no puede superar los 20 caracteres")
+    .min(3, "El nombre debe de contener al  menos 3 caracteres")
+    .matches(
+      /^(?!.*[_.]{2})[a-zA-Z0-9](?!.*[^\w.])[a-zA-Z0-9._]{1,28}[a-zA-Z0-9]$/,
+      "Nombre inválido",
+    )
+    .required("Este campo es obligatorio"),
+
+  email: yup
+    .string()
+    .matches(/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/, "Email inválido")
+    .required("Este campo es obligatorio"),
+
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{}|\\:;"'<>,.?/]).{8,}$/,
+      "Contraseña débil, debe de contener al menos una mayuscula, un caracter especial y tener minimo 6 caracteres",
+    )
+    .required("Este campo es obligatorio"),
+
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Las contraseñas no coinciden")
+    .required("Este campo es obligatorio"),
+});
+
+ type Inputs = yup.InferType<typeof schema>;
 
 export default function Page() {
   const {
@@ -16,7 +51,9 @@ export default function Page() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+  });
 
   const router = useRouter();
   const onSubmit = (data: Inputs) => {
@@ -37,11 +74,15 @@ export default function Page() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        alert("Usuario creado correctamente");
+        toast.custom(() => (
+          <SuccessToastComponent message="Usuario creado correctamente" />
+        ));
         router.push("/login");
       })
       .catch((err) => {
-        alert("something went grong: " + err);
+        toast.custom(() => (
+          <ErrorToastComponent message="Error al iniciar sesion" />
+        ));
         console.log(err);
       });
   };
@@ -60,50 +101,41 @@ export default function Page() {
           {...register("name", { required: true })}
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
-        {errors.name && (
+
           <span className="text-red-500 text-sm">
-            Este campo es obligatorio
+          {errors.name?.message}
           </span>
-        )}
 
         <label className="text-black font-hind">Email:</label>
         <input
           {...register("email", { required: true })}
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
-        {errors.email && (
           <span className="text-red-500 text-sm">
-            Este campo es obligatorio
+          {errors.email?.message}
           </span>
-        )}
 
         <label className="text-black font-hind">Contraseña:</label>
         <input
           type="password"
-          {...register("password", { required: true, minLength: 6 })}
+          {...register("password", { required: true})}
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
-        {errors.password && (
-          <span className="text-red-500 text-sm">
-            La contraseña debe tener al menos 6 caracteres
-          </span>
-        )}
 
+          <span className="text-red-500 text-sm">
+          {errors.password?.message}
+          </span>
         <label className="text-black font-hind">Confirmar Contraseña:</label>
         <input
           type="password"
           {...register("confirmPassword", {
             required: true,
-            validate: (value) =>
-              value === watch("password") || "Las contraseñas no coinciden",
           })}
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
-        {errors.confirmPassword && (
           <span className="text-red-500 text-sm">
-            {errors.confirmPassword.message}
+          {errors.confirmPassword?.message}
           </span>
-        )}
 
         <button
           type="submit"

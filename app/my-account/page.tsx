@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { RenderSummaries } from "../Components/RenderSummaries";
 import EditIcon from "../Components/icons/EditIcon";
 import LogOut from "../Components/icons/LogOut";
 import { useRouter } from "next/navigation";
@@ -14,6 +13,9 @@ export default function Page() {
     await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/login/logout", {
       method: "POST",
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // <-- Este header es necesario
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -48,7 +50,6 @@ export default function Page() {
       <h2 className="text-xl text-black font-ovo pl-3 my-3 max-w-5xl md:my-3">
         Resumenes Subidos:
       </h2>
-      <RenderSummaries searchParams={{ q: undefined }} />
     </div>
   );
 }

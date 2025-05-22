@@ -53,11 +53,13 @@ function LikeButton({ summaryId }: Props) {
   };
 
   useEffect(() => {
+    console.log(userId)
     fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/like/${summaryId}&${userId}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setLikes(data.data.likes)
+        console.log("response from the server: " + data.data.likedByUser)
         setStatus(Boolean(data.data.likedByUser));
       })
       .catch((err) => console.error(err));

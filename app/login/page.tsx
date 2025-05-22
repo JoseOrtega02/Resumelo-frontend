@@ -4,13 +4,11 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useStore } from "../GlobalState/zustandStore";
 import toast from "react-hot-toast";
-import { ErrorToastComponent } from "../Components/ToastComponent";
-
+import { ErrorToastComponent, SuccessToastComponent } from "../Components/ToastComponent";
 interface Inputs {
   email: string;
   password: string;
 }
-
 
 export default function Page() {
   const {
@@ -37,14 +35,14 @@ export default function Page() {
       body: JSON.stringify(body),
     });
 
-    res = await res.json();
-
     if (!res.ok) {
+    res = await res.json();
       toast.custom(() => (<ErrorToastComponent message="Error al iniciar sesion"/>));
       console.log(res);
     } else {
+    res = await res.json();
       console.log(data);
-      alert("Sesion iniciada correctamente");
+        toast.custom(()=> <SuccessToastComponent message="Inicio de seion correctamente"/>)
       checkUser();
       router.push("/");
     }

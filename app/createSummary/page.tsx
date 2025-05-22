@@ -7,11 +7,43 @@ import { AddFile } from "../Components/icons/AddFile";
 import { useRouter } from "next/navigation";
 import { useUser } from "../Utils/useUser";
 
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 interface Inputs {
   name: string;
   desc: string;
   pdfFile: FileList;
 }
+
+
+const schema = yup.object({
+  name: yup
+    .string()
+    .required("El nombre es obligatorio")
+    .min(3, "El nombre debe tener al menos 3 caracteres")
+    .max(50, "El nombre no puede tener más de 50 caracteres"),
+
+  desc: yup
+    .string()
+    .required("La descripción es obligatoria")
+    .min(10, "La descripción debe tener al menos 10 caracteres"),
+
+  pdfFile: yup
+    .mixed<FileList>()
+    .required("El archivo PDF es obligatorio")
+  .test("required", "El archivo PDF es obligatorio", (value) => {
+      return value && value.length > 0;
+    })
+    .test("is-pdf", "El archivo debe ser un PDF", (value) => {
+      return value && value[0]?.type === "application/pdf";
+    })
+    .test("fileSize", "El archivo no debe superar los 5MB", (value) => {
+      return value && value[0]?.size <= 5 * 1024 * 1024;
+    }),
+});
+
+
 
 function Page() {
   const { user } = useUser();
@@ -64,11 +96,10 @@ function Page() {
           {...register("name", { required: true })}
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
-        {errors.name && (
+
           <span className="text-red-500 text-sm">
-            Este campo es obligatorio
+          {errors.name?.message}
           </span>
-        )}
 
         {/* Descripción */}
         <label className="text-black font-hind">Descripción:</label>
@@ -77,6 +108,9 @@ function Page() {
           className="bg-secondary border-black text-black border-2 rounded-3xl h-24 px-3 py-2 text-base"
         />
 
+          <span className="text-red-500 text-sm">
+          {errors.desc?.message}
+          </span>
         {/* Subir Archivo */}
         <label className="text-black font-hind">Subir archivo PDF</label>
 
@@ -96,17 +130,7 @@ function Page() {
         />
         <input
           type="hidden"
-          {...register("pdfFile", {
-            required: "El archivo es obligatorio",
-            validate: {
-              isPdf: (files) =>
-                files?.[0]?.type === "application/pdf" ||
-                "Solo se permiten archivos PDF",
-              fileSize: (files) =>
-                files?.[0]?.size < 5 * 1024 * 1024 ||
-                "El archivo no debe superar los 5MB",
-            },
-          })}
+          {...register("pdfFile")           }
         />
         {/* Botón personalizado para subir archivo */}
         <label
@@ -120,9 +144,9 @@ function Page() {
         </label>
 
         {/* Errores */}
-        {errors.pdfFile && (
-          <p className="text-red-500 text-sm mt-1">{errors.pdfFile.message}</p>
-        )}
+          <span className="text-red-500 text-sm">
+          {errors.pdfFile?.message}
+          </span>
 
         {/* Botón de envío */}
         <button

@@ -1,9 +1,8 @@
-import Image from "next/image";
-import loadingGif from "@/public/Spinner@1x-2.6s-334px-334px.gif";
+import Loader from "./Components/Loader/Loader";
 function Loading() {
   return (
-    <div className="flex justify-center w-full">
-      <Image src={loadingGif} alt="loading gif" />
+    <div className="mt-4 flex justify-center w-full">
+      <Loader/>
     </div>
   );
 }
