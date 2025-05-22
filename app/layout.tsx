@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "./Components/Navbar";
 import { hind_madurai, ovo, poppins } from "./fonts";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
+        <Toaster position="top-right"/>
         <Navbar/>
+
         <main className={`${ovo.variable} ${poppins.variable} ${hind_madurai.variable}`}>{children}</main>
       </body>
     </html>
