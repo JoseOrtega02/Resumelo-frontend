@@ -3,6 +3,7 @@ import { PdfViewer } from "@/app/Components/PdfViewer";
 import { DownloadButton } from "./DownloadButton";
 import LikeButton from "@/app/Components/LikeButton";
 import Loading from "@/app/loading";
+import Link from "next/link";
 
 interface PageProps {
   params: { id: string };
@@ -43,7 +44,9 @@ export default async function Resumen({ params }: PageProps) {
               </div>
             </div>
             <p className="text-sm font-hind text-black">{summary.desc}</p>
-            {/* <Link href={"/author/" + summary.author}>{summary.author}</Link> */}
+        <h4 className="text-xl font-ovo text-black mt-8 mb-2">
+          Author: {" "} <Link className="text-accent" href={"/author/" + summary.author}>{summary.authorData.name}</Link>
+</h4>
           </div>
           <PdfViewer url={summary.pdf} />
           <DownloadButton
