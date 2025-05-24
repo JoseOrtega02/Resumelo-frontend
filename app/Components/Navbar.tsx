@@ -9,6 +9,7 @@ import RegisterSvg from "@/public/user-plus-rounded-svgrepo-com (1) 1.svg";
 import HouseSvg from "@/public/home-white.svg.svg";
 import ClipboardSvg from "@/public/clipboard-black.svg.svg";
 import { useUser } from "../Utils/useUser";
+import HomeIcon from "./icons/HomeIcon";
 export function Navbar() {
   const [open, setOpen] = useState<boolean>(false);
   const { user } = useUser();
@@ -80,28 +81,36 @@ export function Navbar() {
       {/* Mobile Menu Overlay */}
       <nav
         className={`fixed top-0 left-0 w-full h-screen bg-accent text-white 
-        ${
-          open ? "flex flex-col" : "hidden"
-        } transition-transform duration-300 z-50 md:hidden`}
+        ${open ? "flex flex-col" : "hidden"
+          } transition-transform duration-300 z-50 md:hidden`}
       >
         {/* Close Button */}
         <div className="flex justify-end p-4">
           <button onClick={() => setOpen(false)} className="p-2">
-            <Image src={closeSvg} alt="Close menu icon" width={38} />
+            <Image
+              src={closeSvg}
+              className="stroke-black"
+              alt="Close menu icon"
+              width={38}
+            />
           </button>
         </div>
 
         {/* Menu Links */}
         <div className="flex flex-col items-center justify-start py-8 gap-8">
-          <Link href="/">
-            <button onClick={() => setOpen(false)} className="bg-accent rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background">
-              <Image src={HouseSvg} width={28} alt="icono de casa" />
-              Home
-            </button>
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
+            className="bg-accent rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background"
+          >
+            <HomeIcon className="stroke-current" />
+            Home
           </Link>
-
           <Link href="/createSummary">
-            <button onClick={() => setOpen(false)} className=" rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background ">
+            <button
+              onClick={() => setOpen(false)}
+              className=" rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background "
+            >
               <Image
                 src={ClipboardSvg}
                 width={28}
@@ -111,10 +120,13 @@ export function Navbar() {
             </button>
           </Link>
 
-{user != null ? (
+          {user != null ? (
             <div>
               <Link href="/my-account" className="">
-                <button onClick={() => setOpen(false)} className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
+                <button
+                  onClick={() => setOpen(false)}
+                  className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 "
+                >
                   <Image src={LogInSvg} width={28} alt="Usuario Icono" />
                   {user?.name}
                 </button>
@@ -122,17 +134,21 @@ export function Navbar() {
             </div>
           ) : (
             <div className="gap-3 w-full px-4">
-
               <Link href="/login">
                 {" "}
-                <button onClick={() => setOpen(false)} className="flex justify-center items-center gap-2 bg-background text-black font-hind px-4 py-2 rounded-full w-full mt-4 mx-auto border-2 border-black transition-transform transform hover:scale-110">
+                <button
+                  onClick={() => setOpen(false)}
+                  className="flex justify-center items-center gap-2 bg-background text-black font-hind px-4 py-2 rounded-full w-full mt-4 mx-auto border-2 border-black transition-transform transform hover:scale-110"
+                >
                   Log in{" "}
                   <Image src={LogInSvg} width={32} alt="Iniciar Sesion Icono" />
                 </button>
               </Link>{" "}
-
               <Link href="/register">
-                <button onClick={() => setOpen(false)} className="flex justify-center items-center gap-2 bg-alternative1 text-black font-hind px-4 py-2 rounded-full w-full mt-4 mx-auto border-2 border-black transition-transform transform hover:scale-110">
+                <button
+                  onClick={() => setOpen(false)}
+                  className="flex justify-center items-center gap-2 bg-alternative1 text-black font-hind px-4 py-2 rounded-full w-full mt-4 mx-auto border-2 border-black transition-transform transform hover:scale-110"
+                >
                   Register{" "}
                   <Image
                     src={RegisterSvg}
@@ -143,8 +159,7 @@ export function Navbar() {
               </Link>
             </div>
           )}
-          </div>
-
+        </div>
       </nav>
     </header>
   );
