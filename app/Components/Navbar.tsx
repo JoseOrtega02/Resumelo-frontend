@@ -6,10 +6,12 @@ import closeSvg from "@/public/cross-circle-svgrepo-com 1.svg";
 import Link from "next/link";
 import LogInSvg from "@/public/user-svgrepo-com (1) 1.svg";
 import RegisterSvg from "@/public/user-plus-rounded-svgrepo-com (1) 1.svg";
-import HouseSvg from "@/public/home-white.svg.svg";
-import ClipboardSvg from "@/public/clipboard-black.svg.svg";
 import { useUser } from "../Utils/useUser";
 import HomeIcon from "./icons/HomeIcon";
+import ClipboardIcon from "./icons/ClipboardIcon";
+import UserIcon from "./icons/UserIcon";
+import  UserPlusIcon  from "./icons/UserPlusIcon";
+import UserIconLogin from "./icons/UserIconLogin";
 export function Navbar() {
   const [open, setOpen] = useState<boolean>(false);
   const { user } = useUser();
@@ -23,49 +25,45 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/">
-            <button className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
-              <Image src={HouseSvg} width={28} alt="icono de casa" />
-              Home
-            </button>
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
+            className="bg-accent rounded-3xl border-2 border-black text-2xl text-background font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:bg-background hover:text-accent hover:border-accent"
+          >
+            <HomeIcon className="stroke-current" />
+            Home
           </Link>
-          <Link href="/createSummary">
-            <button className=" rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
-              <Image
-                src={ClipboardSvg}
-                width={28}
-                alt="icono de portapapeles"
-              />
-              Create Summary
-            </button>
+          <Link
+            href="/createSummary"
+            onClick={() => setOpen(false)}
+            className="rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-accent hover:border-accent"
+          >
+            <ClipboardIcon className="stroke-current" />
+            Create Summary
           </Link>
           {/* {loading && <h3>loading...</h3>} */}
           {user != null ? (
-            <div>
-              <Link href="/my-account" className="">
-                <button className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 ">
-                  <Image src={LogInSvg} width={28} alt="Usuario Icono" />
-                  {user?.name}
-                </button>
+              <Link
+                href="/my-account"
+                onClick={() => setOpen(false)}
+                className="rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-accent hover:border-accent"
+              >
+                <UserIcon className="fill-current" />
+                {user?.name}
               </Link>
-            </div>
           ) : (
             <div className="flex gap-3">
               <Link href="/login">
                 {" "}
-                <button className="bg-background text-black font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2 transition-transform transform hover:scale-110">
+                <button className="bg-alternative3 text-black font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2 transition-transform transform hover:scale-110 hover:text-black hover:border-black hover:bg-accent">
                   Log in{" "}
-                  <Image src={LogInSvg} width={32} alt="Iniciar Sesion Icono" />
+                    <UserIconLogin />
                 </button>
               </Link>{" "}
               <Link href="/register">
-                <button className="bg-accent text-white font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2 transition-transform transform hover:scale-110">
+                  <button className="bg-alternative1 text-white font-hind px-4 py-2 rounded-full border-2 border-black flex items-center gap-2 transition-transform transform hover:scale-110  hover:text-black hover:border-black hover:bg-accent">
                   Register{" "}
-                  <Image
-                    src={RegisterSvg}
-                    width={32}
-                    alt="Crear Cuenta Icono"
-                  />
+                    <UserPlusIcon />
                 </button>
               </Link>
             </div>
@@ -101,37 +99,29 @@ export function Navbar() {
           <Link
             href="/"
             onClick={() => setOpen(false)}
-            className="bg-accent rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background"
+            className="w-3/5 bg-accent rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background"
           >
             <HomeIcon className="stroke-current" />
             Home
           </Link>
-          <Link href="/createSummary">
-            <button
-              onClick={() => setOpen(false)}
-              className=" rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background "
-            >
-              <Image
-                src={ClipboardSvg}
-                width={28}
-                alt="icono de portapapeles"
-              />
-              Create Summary
-            </button>
+          <Link
+            href="/createSummary"
+            onClick={() => setOpen(false)}
+            className="w-3/5 bg-accent rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background"
+          >
+            <ClipboardIcon className="stroke-current" />
+            Create Summary
           </Link>
 
           {user != null ? (
-            <div>
-              <Link href="/my-account" className="">
-                <button
-                  onClick={() => setOpen(false)}
-                  className="bg-accent rounded-3xl border-2 border-black text-2xl text-white font-ovo flex justify-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 "
-                >
-                  <Image src={LogInSvg} width={28} alt="Usuario Icono" />
-                  {user?.name}
-                </button>
+              <Link
+                href="/my-account"
+                onClick={() => setOpen(false)}
+                className="w-3/5 bg-accent rounded-3xl border-2 border-black text-2xl text-black font-ovo flex justify-center items-center align-center gap-2 px-6 py-2 transition-transform transform hover:scale-110 hover:text-background hover:border-background"
+              >
+                <UserIcon className="fill-current" />
+                {user?.name}
               </Link>
-            </div>
           ) : (
             <div className="gap-3 w-full px-4">
               <Link href="/login">
