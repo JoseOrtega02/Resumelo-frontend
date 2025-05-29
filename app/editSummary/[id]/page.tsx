@@ -14,11 +14,6 @@ import toast from "react-hot-toast";
 import { ErrorToastComponent } from "@/app/Components/ToastComponent";
 import Loading from "@/app/loading";
 
-interface Inputs {
-  name: string;
-  desc: string;
-  pdfFile: FileList;
-}
 
 
 const schema = yup.object({
@@ -48,6 +43,7 @@ const schema = yup.object({
 });
 
 
+ type Inputs = yup.InferType<typeof schema>;
 
 function Page() {
   const { user } = useUser();
@@ -60,7 +56,9 @@ const params = useParams()
     formState: { errors },
     setValue,
     trigger,
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+  });
 
   const [fileName, setFileName] = useState<string | null>(null);
   const [summary,setSummary] = useState<ISummary | null>()
@@ -168,8 +166,8 @@ if(user.id !== summary.author){
             const files = e.target.files;
             if (files && files.length > 0) {
               setFileName(files[0].name);
-              setValue("pdfFile", files); // 👈 Guarda el archivo en RHF
-              trigger("pdfFile"); // 👈 Fuerza la validación del archivo
+              setValue("pdfFile", files);
+              trigger("pdfFile"); 
             }
           }}
         />

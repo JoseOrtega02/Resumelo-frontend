@@ -9,7 +9,7 @@ export async function RenderSummaries({
   const query = (await searchParams.q) ?? "";
   const url = query
     ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/summary/search/${query}`
-    : `${process.env.NEXT_PUBLIC_BACKEND_URL}/summary`;
+    : `${process.env.NEXT_PUBLIC_BACKEND_URL}/summary?page=1`;
   const res = await fetch(url, {
     next: { revalidate: 60 }, // ⚠️ o cache: 'force-cache' si no querés revalidación
   });

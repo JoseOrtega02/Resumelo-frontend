@@ -10,11 +10,11 @@ import { useUser } from "../Utils/useUser";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-interface Inputs {
-  name: string;
-  desc: string;
-  pdfFile: FileList;
-}
+//interface Inputs {
+//  name: string;
+//  desc: string;
+//  pdfFile: FileList;
+//}
 
 
 const schema = yup.object({
@@ -44,6 +44,7 @@ const schema = yup.object({
 });
 
 
+ type Inputs = yup.InferType<typeof schema>;
 
 function Page() {
   const { user } = useUser();
@@ -54,7 +55,9 @@ function Page() {
     formState: { errors },
     setValue,
     trigger,
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+  });
   const [fileName, setFileName] = useState<string | null>(null);
   if (!user) {
     router.push("/login");

@@ -41,7 +41,7 @@ export function DownloadButton({ pdf, title, variant }: Props) {
       }
     >
       <Image src={downloadIcon} width={42} alt="icono de descargar archivo" />
-      Descargar
+      {variant == "desktop" ? "Descargar": ""}
     </button>
   );
 }
