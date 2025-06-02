@@ -36,7 +36,7 @@ export function DownloadButton({ pdf, title, variant }: Props) {
       onClick={() => handleDownload(pdf, title)}
       className={
         variant == "desktop"
-          ? "hidden bg-accent text-white rounded-full drop-shadow-xs border-2 border-black  py-2 px-4 justify-center items-center md:flex"
+          ? "hidden bg-accent text-white rounded-full drop-shadow-xs border-2 border-black  py-2 px-4 justify-center items-center md:flex transition-transform transform hover:scale-110"
           : "bg-accent text-white rounded-full  fixed drop-shadow-xs border-2 border-black  bottom-3 left-3 p-2 md:hidden"
       }
     >

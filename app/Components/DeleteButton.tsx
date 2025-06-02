@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useStore } from "../GlobalState/zustandStore";
 import { SuccessToastComponent } from "./ToastComponent";
 import { useRouter } from "next/navigation";
+import DeleteIcon from "./icons/DeleteIcon";
 
 interface Props{
   authorId: string,
@@ -34,8 +35,9 @@ function DeleteButton({authorId,summaryId}:Props) {
 
         <button
           onClick={() => handleDelete(summaryId)}
-          className="ml-auto bg-red-700 rounded-xl px-2 py-1 text-white flex gap-2 justify-center items-center text-sm"
+          className="ml-auto bg-red-700 rounded-full px-2 py-1 text-white flex gap-2 justify-center items-center text-sm transition-transform transform hover:scale-110"
         >
+          <DeleteIcon className="fill-current" width={42} />
           Delete
         </button>
     ):(<></>)}

@@ -69,12 +69,13 @@ function LikeButton({ summaryId }: Props) {
       {userId ? (
         <button
           onClick={() => handleLike(summaryId, userId, status)}
-          className="relative w-[60px] h-[60px]"
+          className="relative w-[60px] h-[60px]
+          transition-transform transform hover:scale-110 "
         >
           <h5
             className={`absolute inset-0 flex items-center justify-center ${
               status ? "text-white" : "text-black"
-            } z-10 font-ovo text-lg`}
+            } z-10 font-ovo text-lg `}
           >
             {likes}
           </h5>
