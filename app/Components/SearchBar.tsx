@@ -21,8 +21,8 @@ export function SearchBar() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button>
-        <Image src={svg} alt="Icono de lupa" />
+      <button >
+        <Image src={svg} alt="Icono de lupa" className="transition-transform transform hover:scale-110"/>
       </button>
     </form>
   );

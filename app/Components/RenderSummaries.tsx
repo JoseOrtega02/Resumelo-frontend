@@ -15,7 +15,6 @@ const url = query
     next: { revalidate: 60 }, // ⚠️ o cache: 'force-cache' si no querés revalidación
   });
   const data = await res.json();
-  console.log(data);
   return (
     <>
 
@@ -26,18 +25,18 @@ const url = query
       ))}
     </div>
 
-
-    <div className="flex justify-center mt-4 gap-2 text-accent font-ovo">
-      {data.pagination.previousPage && (
-        <a href={`?page=${data.pagination.previousPage}`}>{"<"}Previous</a>
+    {data.pagination ? <div className="flex justify-center mt-4 text-2xl my-8 gap-2 text-accent font-ovo">
+      {data?.pagination?.previousPage && (
+        <a href={`?page=${data?.pagination?.previousPage}`}>{"<"}Previous</a>
       )}
       <span className='text-black'>
-        Page {data.pagination.page} of {data.pagination.totalPages}
+        Page {data?.pagination?.page} of {data?.pagination?.totalPages}
       </span>
-      {data.pagination.nextPage && (
-        <a href={`?page=${data.pagination.nextPage}`}>Next {">"}</a>
+      {data?.pagination?.nextPage && (
+        <a href={`?page=${data?.pagination?.nextPage}`}>Next {">"}</a>
       )}
-    </div>
+    </div>: <></>}
+    
     </>
   );
 }

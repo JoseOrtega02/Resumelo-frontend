@@ -1,7 +1,7 @@
 "use client"
 import toast from "react-hot-toast";
 import { useStore } from "../GlobalState/zustandStore";
-import { SuccessToastComponent } from "./ToastComponent";
+import { LoadingToastComponent, SuccessToastComponent } from "./ToastComponent";
 import { useRouter } from "next/navigation";
 import DeleteIcon from "./icons/DeleteIcon";
 
@@ -13,6 +13,7 @@ function DeleteButton({authorId,summaryId}:Props) {
   const userId = useStore((state) => state.user?.id);
   const router = useRouter()
   const handleDelete =async (summaryId:string) =>{
+    toast.custom(()=> <LoadingToastComponent message="Deleting Summary"/>)
       await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/summary/" + summaryId,{
       method:"DELETE",
       credentials: "include",

@@ -1,17 +1,22 @@
 "use client";
 import React, { Suspense } from "react";
-import EditIcon from "../Components/icons/EditIcon";
 import LogOut from "../Components/icons/LogOut";
 import { useRouter } from "next/navigation";
 import { useStore } from "../GlobalState/zustandStore";
 import { RenderAuthorSummaries } from "../Components/RenderAuthorSummaries";
 import Loading from "../loading";
+import toast from "react-hot-toast";
+import {
+  LoadingToastComponent,
+  SuccessToastComponent,
+} from "../Components/ToastComponent";
 export default function Page() {
   const router = useRouter();
   // const { error, loading } = useUser();
   const user = useStore((state) => state.user);
   const clearState = useStore((state) => state.removeUser);
   const logOut = () => {
+    toast.custom(() => <LoadingToastComponent message="Login out" />);
     fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/login/logout", {
       method: "POST",
       credentials: "include",
@@ -23,15 +28,17 @@ export default function Page() {
       .then((data) => {
         console.log(data);
         clearState();
-        alert("Log out successfully");
+        toast.custom(() => (
+          <SuccessToastComponent message="Log out succsesfully" />
+        ));
         router.push("/");
       })
       .catch((error) => alert(error));
   };
   // if (loading) return <>Loading...</>;
   // if (error) return <>Something went wrong</>;
-  if(!user?.id){
-    return <>please login</>
+  if (!user?.id) {
+    return <>please login</>;
   }
   return (
     <div className="max-w-5xl mx-auto">
@@ -41,13 +48,10 @@ export default function Page() {
             <h2 className="text-2xl font-ovo">{user?.name}</h2>
             <h4 className="text-sm font-hind">{user?.email}</h4>
           </div>
-          <button>
-            <EditIcon />
-          </button>
         </div>
         <button
           onClick={logOut}
-          className="ml-auto bg-red-700 rounded-xl px-2 py-1 text-white flex gap-2 justify-center items-center text-sm"
+          className="ml-auto bg-red-700 rounded-xl px-2 py-1 text-white flex gap-2 justify-center items-center text-sm transition-transform transform hover:scale-110"
         >
           Cerrar sesion <LogOut />
         </button>
@@ -55,8 +59,8 @@ export default function Page() {
       <h2 className="text-xl text-black font-ovo pl-3 my-3 max-w-5xl md:my-3">
         Resumenes Subidos:
       </h2>
-      <Suspense fallback={<Loading/>}>
-      <RenderAuthorSummaries authorId={user?.id}/>
+      <Suspense fallback={<Loading />}>
+        <RenderAuthorSummaries authorId={user?.id} />
       </Suspense>
     </div>
   );

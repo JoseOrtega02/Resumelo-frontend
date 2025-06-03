@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ISummary } from "@/app/Components/Summary";
 import toast from "react-hot-toast";
-import { ErrorToastComponent } from "@/app/Components/ToastComponent";
+import { ErrorToastComponent, SuccessToastComponent } from "@/app/Components/ToastComponent";
 import Loading from "@/app/loading";
 
 
@@ -62,7 +62,7 @@ const params = useParams()
 
   const [fileName, setFileName] = useState<string | null>(null);
   const [summary,setSummary] = useState<ISummary | null>()
-
+const [loading,setLoading] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -103,6 +103,7 @@ if(user.id !== summary.author){
     return <h1>Not authorized</h1>
   }
   const onSubmit: SubmitHandler<Inputs> =async (data) => {
+    setLoading(true)
     const formData = new FormData();
     const file = data.pdfFile[0]; // Obtenemos el archivo subido
 
@@ -117,7 +118,10 @@ if(user.id !== summary.author){
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        toast.custom(()=> <SuccessToastComponent message={data.message}/>)
+        router.push("/resumen/" + data.data.id)
+    })
       .catch((errors) => console.error(errors));
   };
   return (
@@ -194,9 +198,9 @@ if(user.id !== summary.author){
         {/* Botón de envío */}
         <button
           type="submit"
-          className="flex justify-center items-center gap-2 bg-accent  text-white font-hind px-4 py-2 rounded-full mt-4"
+          className={loading ? "flex justify-center items-center gap-2 border-2 border-solid border-black font-hind px-4 py-2 rounded-full mt-4": "flex justify-center items-center gap-2 bg-accent  text-white font-hind px-4 py-2 rounded-full mt-4"}
         >
-          Editar <AddFile />
+          {loading ? <Loading/> : <>{"Editar"} <AddFile /></>}
         </button>
       </form>
     </div>

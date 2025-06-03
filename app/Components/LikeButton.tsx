@@ -82,7 +82,7 @@ function LikeButton({ summaryId }: Props) {
           <HeartIcon status={status} />
         </button>
       ) : (
-        <>Login for give like</>
+        <h3 className="text-black text-lg font-ovo">Login for give like</h3>
       )}
     </>
   );

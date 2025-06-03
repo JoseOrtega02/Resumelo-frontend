@@ -20,6 +20,7 @@ export function RenderAuthorSummaries({ authorId }: Props) {
         const json = await res.json();
         setSummaries(json.data);
       } catch (err) {
+        console.log(err)
         setError("Error al cargar los resúmenes.");
       }
     };

@@ -49,7 +49,6 @@ export default function Page() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),

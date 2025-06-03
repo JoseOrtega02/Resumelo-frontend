@@ -38,7 +38,6 @@ export default function Page() {
     if (!res.ok) {
     res = await res.json();
       toast.custom(() => (<ErrorToastComponent message="Error al iniciar sesion"/>));
-      console.log(res);
     } else {
     res = await res.json();
       console.log(data);
