@@ -13,5 +13,6 @@ variable:"--font-ovo"
 
 export const hind_madurai =Hind_Madurai({
     weight:"400",
+  subsets: ['latin'],
     variable:"--font-hind-madurai"
 })
