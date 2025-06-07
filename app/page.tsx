@@ -7,7 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { q?: string,page?:string };
+  searchParams: Promise<{ q?: string,page?:string }>;
 }) {
   const query = await searchParams;
   return (

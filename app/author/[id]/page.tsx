@@ -1,8 +1,5 @@
 import { RenderSummaries } from "@/app/Components/RenderSummaries";
-interface PageProps {
-  params: { id: string };
-}
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   // const { error, loading } = useUser();
   const { id } = await params;
   const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/user/" + id);
