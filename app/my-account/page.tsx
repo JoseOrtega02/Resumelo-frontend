@@ -25,8 +25,7 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         clearState();
         toast.custom(() => (
           <SuccessToastComponent message="Log out succsesfully" />

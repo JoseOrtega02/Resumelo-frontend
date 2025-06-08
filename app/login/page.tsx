@@ -19,7 +19,6 @@ export default function Page() {
   const router = useRouter();
   const checkUser = useStore((state) => state.checkUser);
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     const body = {
       email: data.email,
       password: data.password,
@@ -40,7 +39,6 @@ export default function Page() {
       toast.custom(() => (<ErrorToastComponent message="Error al iniciar sesion"/>));
     } else {
     res = await res.json();
-      console.log(data);
         toast.custom(()=> <SuccessToastComponent message="Inicio de seion correctamente"/>)
       checkUser();
       router.push("/");

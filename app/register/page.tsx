@@ -71,8 +71,7 @@ export default function Page() {
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         toast.custom(() => (
           <SuccessToastComponent message="Usuario creado correctamente" />
         ));
