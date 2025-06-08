@@ -4,6 +4,12 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import Error from "./error";
 import { ErrorBoundary } from "react-error-boundary";
+import type { Metadata } from 'next'
+export const metadata: Metadata = {
+    title: 'Resumelo',
+}
+
+
 export default async function Home({
   searchParams,
 }: {
