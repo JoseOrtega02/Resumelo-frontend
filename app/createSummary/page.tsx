@@ -10,7 +10,10 @@ import { useUser } from "../Utils/useUser";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
-import { ErrorToastComponent, SuccessToastComponent } from "../Components/ToastComponent";
+import {
+  ErrorToastComponent,
+  SuccessToastComponent,
+} from "../Components/ToastComponent";
 import Loading from "../loading";
 
 //interface Inputs {
@@ -18,7 +21,6 @@ import Loading from "../loading";
 //  desc: string;
 //  pdfFile: FileList;
 //}
-
 
 const schema = yup.object({
   name: yup
@@ -35,7 +37,7 @@ const schema = yup.object({
   pdfFile: yup
     .mixed<FileList>()
     .required("El archivo PDF es obligatorio")
-  .test("required", "El archivo PDF es obligatorio", (value) => {
+    .test("required", "El archivo PDF es obligatorio", (value) => {
       return value && value.length > 0;
     })
     .test("is-pdf", "El archivo debe ser un PDF", (value) => {
@@ -46,8 +48,7 @@ const schema = yup.object({
     }),
 });
 
-
- type Inputs = yup.InferType<typeof schema>;
+type Inputs = yup.InferType<typeof schema>;
 
 function Page() {
   const { user } = useUser();
@@ -62,13 +63,13 @@ function Page() {
     resolver: yupResolver(schema),
   });
   const [fileName, setFileName] = useState<string | null>(null);
-  const [loading,setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
   if (!user) {
     router.push("/login");
     return null;
   }
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setLoading(true)
+    setLoading(true);
     const formData = new FormData();
     const file = data.pdfFile[0]; // Obtenemos el archivo subido
 
@@ -84,13 +85,17 @@ function Page() {
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.custom(() => <SuccessToastComponent message={data.message}/>)
-        router.push("/resumen/" + data.data.id)
+        toast.custom(() => <SuccessToastComponent message={data.message} />);
+        setLoading(false);
+        router.push("/resumen/" + data.data.id);
       })
       .catch((error) => {
-        console.log(error)
-        toast.custom(() => <ErrorToastComponent message="Error creating summary" /> )
-    });
+        console.log(error);
+        toast.custom(() => (
+          <ErrorToastComponent message="Error creating summary" />
+        ));
+        setLoading(false);
+      });
   };
 
   return (
@@ -111,9 +116,7 @@ function Page() {
           className="bg-secondary border-black text-black border-2 rounded-3xl px-3 py-2"
         />
 
-          <span className="text-red-500 text-sm">
-          {errors.name?.message}
-          </span>
+        <span className="text-red-500 text-sm">{errors.name?.message}</span>
 
         {/* Descripción */}
         <label className="text-black font-hind">Descripción:</label>
@@ -122,9 +125,7 @@ function Page() {
           className="bg-secondary border-black text-black border-2 rounded-3xl h-24 px-3 py-2 text-base"
         />
 
-          <span className="text-red-500 text-sm">
-          {errors.desc?.message}
-          </span>
+        <span className="text-red-500 text-sm">{errors.desc?.message}</span>
         {/* Subir Archivo */}
         <label className="text-black font-hind">Subir archivo PDF</label>
 
@@ -142,10 +143,7 @@ function Page() {
             }
           }}
         />
-        <input
-          type="hidden"
-          {...register("pdfFile")           }
-        />
+        <input type="hidden" {...register("pdfFile")} />
         {/* Botón personalizado para subir archivo */}
         <label
           htmlFor="fileInput"
@@ -158,16 +156,24 @@ function Page() {
         </label>
 
         {/* Errores */}
-          <span className="text-red-500 text-sm">
-          {errors.pdfFile?.message}
-          </span>
+        <span className="text-red-500 text-sm">{errors.pdfFile?.message}</span>
 
         {/* Botón de envío */}
         <button
           type="submit"
-          className={loading ? "flex justify-center items-center gap-2 border-2 border-solid border-black font-hind px-4 py-2 rounded-full mt-4": "flex justify-center items-center gap-2 bg-accent  text-white font-hind px-4 py-2 rounded-full mt-4"}
+          className={
+            loading
+              ? "flex justify-center items-center gap-2 border-2 border-solid border-black font-hind px-4 py-2 rounded-full mt-4"
+              : "flex justify-center items-center gap-2 bg-accent  text-white font-hind px-4 py-2 rounded-full mt-4"
+          }
         >
-          {loading ? <Loading/> : <>{"Publicar"} <AddFile /></>}
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              {"Publicar"} <AddFile />
+            </>
+          )}
         </button>
       </form>
     </div>

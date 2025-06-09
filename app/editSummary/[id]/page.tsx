@@ -106,7 +106,7 @@ if(user.id !== summary.author){
     setLoading(true)
     const formData = new FormData();
     const file = data.pdfFile[0]; // Obtenemos el archivo subido
-
+    console.log(file)
     formData.append("title", data.name);
     formData.append("desc", data.desc);
     formData.append("pdf", file);
@@ -120,9 +120,16 @@ if(user.id !== summary.author){
       .then((res) => res.json())
       .then((data) => {
         toast.custom(()=> <SuccessToastComponent message={data.message}/>)
+      setLoading(false)
         router.push("/resumen/" + data.data.id)
     })
-      .catch((errors) => console.error(errors));
+      .catch((errors) => {
+      console.error(errors)
+        toast.custom(() => (
+          <ErrorToastComponent message="Error Editing summary" />
+        ));
+      setLoading(false)
+    });
   };
   return (
     <div className="max-w-5xl mx-auto">
