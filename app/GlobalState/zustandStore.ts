@@ -23,7 +23,10 @@ export const useStore = create(
             process.env.NEXT_PUBLIC_BACKEND_URL + "/login/checkUser",
             {
               credentials: "include",
-            }
+              headers: {
+                "Content-Type": "application/json",
+              },
+            },
           );
           if (!res.ok) {
             throw new Error("Not Authenticated");
@@ -41,6 +44,6 @@ export const useStore = create(
         }
       },
     }),
-    { name: "user-storage" }
-  )
+    { name: "user-storage" },
+  ),
 );
